@@ -13,9 +13,11 @@ The data is filtered based on the isotop dot product (≥ 0.9), the library dot 
 
 # Analysis of the data using the Shiny interface
 
-a.	Open the User_Interface_Sex_Identification.R file using R studio. 
-b.	Click on “Run App”. 
-c.	The Shiny app window opens. 
+a. Open the User_Interface_Sex_Identification.R file using R studio. 
+
+b. Click on “Run App”. 
+
+c.The Shiny app window opens. 
 
 ![image](https://github.com/ClaireKoenig/SexIdentification/assets/134442809/d6cbfad4-3637-4a59-9068-ed4fa0c84a00)
 
@@ -60,7 +62,9 @@ b.	Open the “SexIdentificationTemplate.sky” document in Skyline. Once opened
 ![image](https://github.com/ClaireKoenig/SexIdentification/assets/134442809/82cba983-eac8-4d14-bcef-1047419135f3)
 
 c.	Check that the defined parameters are preserved. 
-  1.	Peptide settings (Settings -> Peptide settings)
+
+
+  #### 1.	Peptide settings (Settings -> Peptide settings)
   
   i.	Digestion: Enzyme -> Unspecific (create it if needed by adding the peptide alphabet (ACDEFGHIKLMNPQRSTVWY) as being cleaved at the C-terminal). Max missed cleavages: 0. Background proteome: None.
  
@@ -74,7 +78,7 @@ c.	Check that the defined parameters are preserved.
   
   vi.	Quantification: Regression fit: None. Normalization method: None. Regression weighting: None. MS level: 2.
 
-  2.	Transition settings (Settings -> Transition Settings):
+  #### 2.	Transition settings (Settings -> Transition Settings):
   
   i.	Prediction: keep default
   
@@ -94,11 +98,11 @@ d.	Build the custom-made reports:
   
   2.	Name the report in the Report Name. Select the columns as indicated. The order of the columns has to be preserved. The columns can be found faster using CTRL+F.
   
-  i.	PeptideIntensitiesData: 
+  ### i.	PeptideIntensitiesData: 
 
   ![image](https://github.com/ClaireKoenig/SexIdentification/assets/134442809/69919730-a5f7-4e4a-a5cd-2aaa10512f30)
 
-  ii.	RawIntensitiesData:
+  ### ii.	RawIntensitiesData:
 
 ![image](https://github.com/ClaireKoenig/SexIdentification/assets/134442809/4ec4979e-9ebc-4116-b69c-e842585a0df6)
 
@@ -127,12 +131,19 @@ g.	Add the information about the standards:
   3.	In the Sample Type column, pick the right sample type per file: Standards, Blanks or Unknown for a sample. 
   4.	In the Analyte Concentration column, add the concentration of the standards as shown below: 
 
+
 Standard:	A	B	C	D	E	F
+
 Analyte Concentration:	10	7.5	5	2.5	1	0.1
 
-5.	In the Concentration Multiplier column, add the multiplying factors as shown below: 
+
+5.	In the Concentration Multiplier column, add the multiplying factors as shown below:
+   
+
 Peptide Modified Sequence:	SMIRPPY	SM[+16]IRPPY	SM[+16]IRPPYS	SIRPPYPSY	SIRPPYPSYG
+
 Concentration Multiplier:	1	0.2	1	1	1
+
 
 h.	Export the two custom made reports: 
   1.	File -> Export -> Report. 
@@ -142,6 +153,7 @@ h.	Export the two custom made reports:
 
 # Generate experimental design table: 
 a.	Create a table with 2 columns as in the example: 
+
   1.	“File Name”: Copy paste the names of the raw files from the PeptideIntensitiesData report (STD and samples).
   2.	“Experiment”: Name your experiment.
   3.	Save the table as a txt file.
@@ -149,4 +161,6 @@ a.	Create a table with 2 columns as in the example:
 ![image](https://github.com/ClaireKoenig/SexIdentification/assets/134442809/e7eecb2b-2750-4189-968f-5551dc0c703e)
 
 b.	If there is only one experiment, the experiment name should be the same for all the files. 
+
 c.	If there is more than one experiment, specify different experiment names per experiment. Also provide to the script a unique PeptideIntensitiesData and RawIntensitiesData files. Different reports can be exported from Skyline separately and combined manually afterwards.
+
