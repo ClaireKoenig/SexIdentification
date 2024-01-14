@@ -1,3 +1,60 @@
+# Sex identification application
+
+This open-sourced pipeline enable acurate sex identification from dental enamel based on PRM mass spectrometric data. 
+
+# Input
+3 custom made reports from Skyline are requiered as an input.
+1. Peptide intensities data (Peptide, Protein, Replicate, Peptide Peak Found Ratio, Normalised Area, Library Dot Product, Isotope Dot Product, Peptide Modified Sequence, File Name, Sample Type, Analyte Concentration and Concentration Multiplier)
+2. Raw intensities data (Modified Sequence, Replicate, Precursor, Transition, Raw Times, Raw Intensities, Sample Type)
+3. Experimental desing (File Name, Experiment) - not from Skyline
+
+# Principle
+The data is filtered based on the isotop dot product (≥ 0.9), the library dot product (≥ 0.9) and the peptide peak found ratio (≥ 0.9). The Standards are subseted from the samples and the limit of detection and quantification are calculated based on linear regression. The limit of detection per target is calculated as 3.3 x (Residual Standard Error / Slope) and the limit of quantification is calculated as 10 x (Residual Standard Error / Slope). The targets with measured intensities below their respective limits of quantification are filtered out. AMELX and AMELY intensities are calculated as the sum of the intensities of their targets. Samples measured with a non-zero AMELY intensity are identified as males. The AMELY/AMELX intensity relationship is modelled by (1) generating a linear regression based on the prior male identifications from the dataset studied or by (2)  using a predefined model based on the analysis of modern material generated in this study. For the first option, outliers can be controlled by allowing a maximum percentage of the data points to be removed. If a samples residual is > 2 * standard error of the residuals in the model, that outlier is removed and the model is recalculated. This process is performed as long as there are either no outliers left in the dataset or the maximum number of points allowed has been removed. The confidence interval of the model is calculated with a 95% confidence as ± 2 * standard error of the fitted values. For each sample presenting a null AMELY intensity, the predicted AMELY intensity is calculated based on the model with the corresponding confidence intervals. AMELX and AMELY LOQ and LOD are calculated as the highest LOQ or LOD of the targets corresponding to AMELX or AMELY respectively. A sample is identified as female if the predicted AMELY intensity is above AMELY LOQ and if the lower limit of the predicted AMELY is above 90% of AMELY LOQ and above the AMELY LOD. If the sample does not fit one of these conditions, it will be annotated as “Nonconclusive”.
+
+# Analysis of the data using the Shiny interface
+
+a.	Open the User_Interface_Sex_Identification.R file using R studio. 
+b.	Click on “Run App”. 
+c.	The Shiny app window opens. 
+![image](https://github.com/ClaireKoenig/SexIdentification/assets/134442809/d6cbfad4-3637-4a59-9068-ed4fa0c84a00)
+
+d.	Load the tables and generate the standard curves: 
+  1.	Load the “PeptideIntensitiesData” report.
+  2.	Load the “ExperimentalDesign” reports.
+  3.	Click on “Plot STD curves”. 
+  4.	The standard curves per target, per experiment are plotted and the LOD and LOQ are calculated.
+
+<img width="471" alt="image" src="https://github.com/ClaireKoenig/SexIdentification/assets/134442809/8bbef7a1-2846-4e4c-a872-b6bd5c6f1b36">
+
+e.	Get the sex identification: 
+  1.	Click on the “Summary” tab.
+  2.	Choose the model (Experimental or Pre-defined).
+  3.	If the Experimental model is checked, the maximum percentage of data points can be adjusted to remove outliers. By default, the value is set at 0. 
+  4.	Click on Plot model.
+  5.	On the left, a summary plot with AMELY intensity = f(AMELX intensity) is displayed. On the right, the model is shown. 
+<img width="446" alt="image" src="https://github.com/ClaireKoenig/SexIdentification/assets/134442809/04039796-936e-4eb6-a27b-9867245c8d4a">
+
+6.	Click on Plot table. 
+7.	The table summarizes the identification per sample.
+8.	The table can be downloaded by clicking on “Download the data”. 
+<img width="475" alt="image" src="https://github.com/ClaireKoenig/SexIdentification/assets/134442809/652bb3b5-9494-447c-a58f-03032a642f78">
+
+f.	Go back to the MS signal on the Shiny app.
+  1.	Click on the “Signal per sample” tab.
+  2.	Load the “RawIntensitiesData” report.
+  3.	Select one sample.
+  4.	Click on “Plot XIC”.
+  5.	The App is plotting the extracted ion current of the targets for the selected sample. The sex is displayed in the first panel. On the top row are the AMELX targets and on the bottom raw are the AMELY targets. 
+
+<img width="476" alt="image" src="https://github.com/ClaireKoenig/SexIdentification/assets/134442809/5d9f44c7-bae1-4bdd-b0c6-081d6452eb53">
+
+
+
+
+
+
+
+
 Automated data analysis for sex identification
 
 I.	Extraction of the ion signal using Skyline:
