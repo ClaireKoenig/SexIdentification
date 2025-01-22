@@ -203,7 +203,8 @@ server <- (function(input, output, session) {
       NewTable <- rbind(NewTable, datawide)
     }
     #Add sex identification
-    NewTable [, Sex := fifelse(AMELY == "0", "Unknown", "Male")]
+    NewTable[, Sex := fifelse(AMELY == "0", "Unknown", 
+                              fifelse(AMELX == "0", "NonConclusive", "Male"))]
     return(NewTable)
   }
   
@@ -311,7 +312,7 @@ server <- (function(input, output, session) {
   #11. Combine identifications in summary table - (dt1 = Female, dt2 = ID_Male)
   #Input: Table with female identification, Table with male identification. Output: Combined table with both male and female identification.
   Summary_table <- function (dt1, dt2) {
-    Males2 <- dt2 [dt2$Sex == "Male", ]
+    Males2 <- dt2 [dt2$Sex == "Male"| dt2$Sex == "NonConclusive", ]
     Females2 <- dt1 [, c("Replicate", "AMELX", "AMELY", "Females", "Experiment")]
     Males2 <- Males2 [ , c("Replicate", "AMELX", "AMELY", "Sex", "Experiment")]
     colnames(Females2) <- c("Sample" , "AMELX", "AMELY", "Sex", "Experiment")
